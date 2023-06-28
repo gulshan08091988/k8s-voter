@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: voterjob-init
+  labels:
+    name: voterjob
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: testclient
+  template:
+    metadata:
+      labels:
+        name: testclient
+    spec:
+      containers:
+      - name: c
+        image: jadejakajal13/k8s-voter:1
+        # args "file", mode, hosts
+        args: ["./k8s-run.sh", "init", "mydb-voltdb-cluster-client.voltdb.svc.cluster.local"]
+      restartPolicy: Always
+
